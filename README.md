@@ -77,7 +77,7 @@ sudo snap install helm --classic
 
 ## Install Crossplane
 
-### Enable Crossplane Helm Chart
+### Install Crossplane Helm Chart
 ```bash
 # Add Helm repo and update
 helm repo add crossplane-stable https://charts.crossplane.io/stable
@@ -95,3 +95,27 @@ helm install crossplane \
 kubectl apply -f awsprovider.yaml
 ```
 
+
+### Configure AWS Provider Config
+
+Create aws-credentials.txt. Populate with actual access key secret key.
+```bash
+[default]
+aws_access_key_id = 
+aws_secret_access_key = 
+```
+
+create kubernetes secret aws-secret
+```bash
+kubectl create secret generic aws-secret -n crossplane-system --from-file=creds=./aws-credentials.txt
+```
+
+verify secret
+```bash
+kubectl get secrets
+```
+
+Create configProvider
+```bash
+kubectl apply -f providerconfig.yaml
+```
