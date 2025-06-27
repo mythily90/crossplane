@@ -1,0 +1,35 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: postgresql.aws.db.example.org
+spec:
+  compositeTypeRef:
+    apiVersion: db.example.org/v1alpha1
+    kind: XPostgreSQLInstance
+  resources:
+    - name: rdsInstance
+      base:
+        apiVersion: rds.aws.upbound.io/v1beta1
+        kind: Instance
+        spec:
+          forProvider:
+            region: ap-south-1
+            instanceClass: db.t3.micro
+            engine: postgres
+            username: adminuser
+            passwordSecretRef:
+              name: db-password
+              namespace: crossplane-system
+              key: password
+            backupRetentionPeriod: 7
+            skipFinalSnapshot: false
+            publiclyAccessible: false
+          writeConnectionSecretToRef:
+            namespace: crossplane-system
+            name: db-connection
+          providerConfigRef:
+            name: default
+      patches:
+        - fromFieldPath: "spec.storageGB"
+          toFieldPath: "spec.forProvider.allocatedStorage"
+

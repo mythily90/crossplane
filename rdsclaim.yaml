@@ -1,0 +1,8 @@
+# Simple PostgreSQLInstance claim
+apiVersion: db.example.org/v1alpha1
+kind: PostgreSQLInstance
+metadata:
+  name: my-app-db
+  namespace: my-app
+spec:
+  storageGB: 20

@@ -1,0 +1,28 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xpostgresqlinstances.db.example.org
+spec:
+  group: db.example.org
+  names:
+    kind: XPostgreSQLInstance
+    plural: xpostgresqlinstances
+  claimNames: # This defines what developers will use
+    kind: PostgreSQLInstance
+    plural: postgresqlinstances
+  versions:
+  - name: v1alpha1
+    served: true
+    referenceable: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              storageGB: # Simple parameter for developers
+                type: integer
+                description: "The amount of storage in GB."
+            required:
+            - storageGB
