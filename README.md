@@ -1,4 +1,4 @@
-# GitHub Environment Setup for Crossplane Demo
+# Environment Setup for Crossplane Demo
 
 This guide outlines steps to set up a local Kubernetes environment using `kind`, install `Crossplane` using Helm, and configure the AWS provider.
 
