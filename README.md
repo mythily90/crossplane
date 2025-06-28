@@ -13,8 +13,10 @@ This guide outlines steps to set up a local Kubernetes environment using `kind`,
   - [Create Kubernetes Cluster](#create-kubernetes-cluster)
   - [Install Helm](#install-helm)
 - [Install Crossplane](#install-crossplane)
-  - [Enable Crossplane Helm Chart](#enable-crossplane-helm-chart)
+  - [Install Crossplane Helm Chart](#install-crossplane-helm-chart)
   - [Configure AWS Provider](#configure-aws-provider)
+  - [Managed Resource Creation](#managed-resource-aws-s3-creation)
+  - [XR Creation](#xr-creation-rds)
 
 ---
 
@@ -113,9 +115,47 @@ kubectl create secret generic aws-secret -n crossplane-system --from-file=creds=
 verify secret
 ```bash
 kubectl get secrets
-```
+``` 
 
 Create configProvider
 ```bash
 kubectl apply -f providerconfig.yaml
 ```
+
+### Managed Resource (AWS s3 Creation)
+```bash
+kubectl apply -f s3bucket.yaml
+```
+
+### XR Creation (RDS)
+
+#### Composite Resource Definition
+```bash
+kubectl apply -f rdsxrd.yaml
+```
+#### Composition
+```bash
+kubectl apply -f rdscomposition.yaml
+```
+
+#### Claim Creation
+
+Create namespace
+```bash
+kubectl create namespace my-app
+```
+
+Create secret
+``bash
+kubectl apply -f dbsecret.yaml
+```
+
+Create claim
+``bash
+kubectl apply -f rdsclaim.yaml
+```
+
+Verify
+```bash
+kubectl get postgresqlinstances -n my-app
+```bash
