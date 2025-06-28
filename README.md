@@ -134,6 +134,23 @@ kubectl apply -f s3bucket.yaml
 kubectl apply -f rdsxrd.yaml
 ```
 #### Composition
+
+Create secret
+secret file format : (not commited to the repo)
+```bash
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-password
+  namespace: crossplane-system
+type: Opaque
+data:
+  password: c3VwZXJzZWNyZXQ=  # base64-encoded 'supersecret'
+```
+Apply secret
+```bash
+kubectl apply -f dbsecret.yaml
+```
 ```bash
 kubectl apply -f rdscomposition.yaml
 ```
@@ -143,11 +160,6 @@ kubectl apply -f rdscomposition.yaml
 Create namespace
 ```bash
 kubectl create namespace my-app
-```
-
-Create secret
-``bash
-kubectl apply -f dbsecret.yaml
 ```
 
 Create claim
