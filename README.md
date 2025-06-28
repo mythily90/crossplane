@@ -1,4 +1,4 @@
-# Environment Setup for Crossplane Demo
+# Creating Crossplane Managed and Composite Resources on kind
 
 This guide outlines steps to set up a local Kubernetes environment using `kind`, install `Crossplane` using Helm, and configure the AWS provider.
 
@@ -16,7 +16,7 @@ This guide outlines steps to set up a local Kubernetes environment using `kind`,
   - [Install Crossplane Helm Chart](#install-crossplane-helm-chart)
   - [Configure AWS Provider](#configure-aws-provider)
   - [Managed Resource Creation](#managed-resource-aws-s3-creation)
-  - [XR Creation](#xr-creation-rds)
+  - [XR/Claim Creation](#xr-creation-rds)
 
 ---
 
@@ -127,7 +127,9 @@ kubectl apply -f providerconfig.yaml
 kubectl apply -f s3bucket.yaml
 ```
 
-### XR Creation (RDS)
+### XR/claim Creation (RDS)
+
+Claim is namespace scoped while XR is not. This example is for claim creation.
 
 #### Composite Resource Definition
 ```bash
